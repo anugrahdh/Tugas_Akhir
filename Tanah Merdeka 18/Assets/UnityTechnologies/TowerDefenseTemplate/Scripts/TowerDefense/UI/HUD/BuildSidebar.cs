@@ -14,6 +14,8 @@ namespace TowerDefense.UI.HUD
 		/// </summary>
 		public TowerSpawnButton towerSpawnButton;
 
+		public GameObject startButton;
+
 		/// <summary>
 		/// Initialize the tower spawn buttons
 		/// </summary>
@@ -83,11 +85,29 @@ namespace TowerDefense.UI.HUD
 			}
 		}
 
-		/// <summary>
-		/// Debug button to add currency
-		/// </summary>
-		/// <param name="amount">How much to add</param>
-		public void AddCurrency(int amount)
+        private void Update()
+        {
+			if (LevelManager.instanceExists)
+			{
+				if(LevelManager.instance.levelState == LevelState.Building)
+                {
+					if(!startButton.activeInHierarchy)
+						startButton.SetActive(true);
+
+				}
+				else
+                {
+					if (startButton.activeInHierarchy)
+						startButton.SetActive(false);
+				}
+			}
+		}
+
+        /// <summary>
+        /// Debug button to add currency
+        /// </summary>
+        /// <param name="amount">How much to add</param>
+        public void AddCurrency(int amount)
 		{
 			if (LevelManager.instanceExists)
 			{

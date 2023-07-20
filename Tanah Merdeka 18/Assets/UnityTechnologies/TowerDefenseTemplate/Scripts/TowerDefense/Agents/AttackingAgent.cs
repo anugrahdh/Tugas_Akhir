@@ -26,6 +26,8 @@ namespace TowerDefense.Agents
 		/// </summary>
 		protected bool m_IsAttacking;
 
+		[SerializeField] Animator animator;
+
 		public override void Initialize()
 		{
 			base.Initialize();
@@ -97,22 +99,54 @@ namespace TowerDefense.Agents
 					AttackingUpdate();
 					break;
 			}
+
+			switch (state)
+			{
+				case State.OnCompletePath:
+					if (animator)
+						animator.SetBool("isAttacking", false);
+					break;
+				case State.OnPartialPath:
+					if (animator)
+						animator.SetBool("isAttacking", false);
+					break;
+				case State.Attacking:
+					if (animator)
+						animator.SetBool("isAttacking", true);
+					break;
+			}
+
+
 		}
-		
+
+		/// <summary>
+		/// Move along the path, change to <see cref="Agent.State.OnPartialPath" />
+		/// </summary>
+		protected override void OnCompletePathUpdate()
+		{
+			m_AttackAffector.towerTargetter.transform.position = transform.position;
+			Tower tower = GetClosestTower();
+			if (tower)
+			{
+				m_TargetTower = tower;
+				float distanceToTower = Vector3.Distance(transform.position, m_TargetTower.transform.position);
+				state = (isPathBlocked || distanceToTower <= m_AttackAffector.towerTargetter.effectRadius) ? State.OnPartialPath : State.OnCompletePath;
+			}
+			else
+            {
+				state = isPathBlocked ? State.OnPartialPath : State.OnCompletePath;
+			}
+			
+		}
+
 		/// <summary>
 		/// Change to <see cref="Agent.State.OnCompletePath" /> when path is no longer blocked or to
 		/// <see cref="Agent.State.Attacking" /> when the agent reaches <see cref="AttackingAgent.m_TargetTower" />
 		/// </summary>
 		protected override void OnPartialPathUpdate()
 		{
-			if (!isPathBlocked)
-			{
-				state = State.OnCompletePath;
-				return;
-			}
-
 			// Check for closest tower at the end of the partial path
-			m_AttackAffector.towerTargetter.transform.position = m_NavMeshAgent.pathEndPosition;
+			//m_AttackAffector.towerTargetter.transform.position = m_NavMeshAgent.pathEndPosition;
 			Tower tower = GetClosestTower();
 			if (tower != m_TargetTower)
 			{
@@ -133,20 +167,29 @@ namespace TowerDefense.Agents
 			}
 			if (m_TargetTower == null)
 			{
-				return;
+				if (!isPathBlocked)
+				{
+					state = State.OnCompletePath;
+					return;
+				}
 			}
-			float distanceToTower = Vector3.Distance(transform.position, m_TargetTower.transform.position);
-			if (!(distanceToTower < m_AttackAffector.towerTargetter.effectRadius))
-			{
-				return;
+			else
+            {
+				float distanceToTower = Vector3.Distance(transform.position, m_TargetTower.transform.position);
+				if (distanceToTower >= m_AttackAffector.towerTargetter.effectRadius)
+				{
+					return;
+				}
+
+				if (!m_AttackAffector.enabled)
+				{
+					m_AttackAffector.towerTargetter.transform.position = transform.position;
+					m_AttackAffector.enabled = true;
+				}
+				state = State.Attacking;
+				m_NavMeshAgent.isStopped = true;
 			}
-			if (!m_AttackAffector.enabled)
-			{
-				m_AttackAffector.towerTargetter.transform.position = transform.position;
-				m_AttackAffector.enabled = true;
-			}
-			state = State.Attacking;
-			m_NavMeshAgent.isStopped = true;
+			
 		}
 		
 		/// <summary>
@@ -154,19 +197,35 @@ namespace TowerDefense.Agents
 		/// </summary>
 		protected void AttackingUpdate()
 		{
-			if (m_TargetTower != null)
+			if (m_TargetTower)
 			{
 				return;
 			}
+
+
 			MoveToNode();
 
 			// Resume path once blocking has been cleared
 			m_IsAttacking = false;
 			m_NavMeshAgent.isStopped = false;
 			m_AttackAffector.enabled = false;
-			state = isPathBlocked ? State.OnPartialPath : State.OnCompletePath;
+
+			
+
+			Tower tower = GetClosestTower();
+			if (tower)
+			{
+				float distanceToTower = Vector3.Distance(transform.position, tower.transform.position);
+				state = (isPathBlocked || distanceToTower <= m_AttackAffector.towerTargetter.effectRadius) ? State.OnPartialPath : State.OnCompletePath;
+			}
+			else
+			{
+				state = isPathBlocked? State.OnPartialPath : State.OnCompletePath;
+			}
+
 			// Move the Targetter back to the agent's position
 			m_AttackAffector.towerTargetter.transform.position = transform.position;
+
 		}
-	}
+    }
 }

@@ -14385,7 +14385,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1271389358909432}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.45
+  m_Radius: 1.1
   m_Speed: 2
   m_Acceleration: 20
   avoidancePriority: 60
@@ -14394,8 +14394,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0
+  m_Height: 1.76
+  m_BaseOffset: 0.25
   m_WalkableMask: 7
   m_ObstacleAvoidanceType: 4
 --- !u!114 &114975712440518228
@@ -14419,6 +14419,7 @@ MonoBehaviour:
   targetTransform: {fileID: 0}
   appliedEffectOffset: {x: 0, y: 0.2, z: 0}
   appliedEffectScale: 1
+  animator: {fileID: 0}
 --- !u!114 &114027339249030032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14653,8 +14654,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5191112, y: 0.7688527, z: 2.1745498}
-  m_Center: {x: -0.012941241, y: 0.61869645, z: 0.019012332}
+  m_Size: {x: 1.5191112, y: 0.8376982, z: 3.115067}
+  m_Center: {x: -0.012941241, y: 0.57353616, z: -0.3594954}
 --- !u!114 &114913371651466060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14699,6 +14700,7 @@ MonoBehaviour:
   deathParticleSystemPrefab: {fileID: 198059975614214484, guid: 42a3690e5d4a841ad958c0e3b9b7b19e,
     type: 3}
   deathEffectOffset: {x: 0, y: 1.5, z: 0}
+  animator: {fileID: 0}
 --- !u!1 &1335503300466980
 GameObject:
   m_ObjectHideFlags: 0
@@ -19540,7 +19542,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &95500934087789406
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -19557,7 +19559,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1580388104586812
 GameObject:
   m_ObjectHideFlags: 0
@@ -24396,7 +24399,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 6
+  m_Radius: 8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1679765128570418
 GameObject:
@@ -34099,7 +34102,7 @@ MeshFilter:
   m_Mesh: {fileID: 4300000, guid: 989fb7eab843640c7ada0607778bcf7e, type: 3}
 --- !u!95 &95778398659778780
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -34116,7 +34119,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1882497406495806
 GameObject:
   m_ObjectHideFlags: 0

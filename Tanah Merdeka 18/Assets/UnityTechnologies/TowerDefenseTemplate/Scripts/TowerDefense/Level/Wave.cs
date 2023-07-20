@@ -131,6 +131,7 @@ namespace TowerDefense.Level
 		{
 			if (waveCompleted != null)
 			{
+				LevelManager.instance.StartBuilding();
 				waveCompleted();
 			}
 		}
