@@ -33,6 +33,9 @@ public class Swiitch : MonoBehaviour
 
     public void Next()
     {
+        if (index >= Sinopsis.Length -1)
+            return;
+
         index += 1;
 
         for (int i = 0; i < Sinopsis.Length; i++)
@@ -45,6 +48,9 @@ public class Swiitch : MonoBehaviour
 
     public void Previous()
     {
+        if (index <= 0)
+            return;
+
         index -= 1;
 
         for (int i = 0; i < Sinopsis.Length; i++)

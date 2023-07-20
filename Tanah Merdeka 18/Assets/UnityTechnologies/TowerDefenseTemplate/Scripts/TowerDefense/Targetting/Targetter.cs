@@ -363,7 +363,7 @@ namespace TowerDefense.Targetting
 					m_XRotationCorrectionTime = Mathf.Clamp01((m_XRotationCorrectionTime + Time.deltaTime) / idleCorrectionTime);
 					euler.y += m_CurrentRotationSpeed * Time.deltaTime;
 
-					turret.eulerAngles = euler;
+					turret.localRotation = Quaternion.identity;
 				}
 			}
 			else

@@ -112,6 +112,9 @@ namespace TowerDefense.Level
 		/// </summary>
 		protected virtual void InitCurrentWave()
 		{
+			if (LevelManager.instance.levelState != LevelState.SpawningEnemies)
+				return;
+
 			Wave wave = waves[m_CurrentIndex];
 			wave.waveCompleted += NextWave;
 			wave.Init();

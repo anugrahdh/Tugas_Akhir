@@ -4907,6 +4907,7 @@ MonoBehaviour:
   targetTransform: {fileID: 4769717189713608}
   appliedEffectOffset: {x: 0, y: 0.5, z: 0}
   appliedEffectScale: 1
+  animator: {fileID: 7955540707863366036}
 --- !u!114 &114027339249030032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5172,6 +5173,7 @@ MonoBehaviour:
   deathParticleSystemPrefab: {fileID: 198059975614214484, guid: 42a3690e5d4a841ad958c0e3b9b7b19e,
     type: 3}
   deathEffectOffset: {x: 0, y: 1.5, z: 0}
+  animator: {fileID: 7955540707863366036}
 --- !u!1 &1291363099768310
 GameObject:
   m_ObjectHideFlags: 0
@@ -5292,7 +5294,7 @@ MeshRenderer:
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!95 &95180478924101324
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5309,7 +5311,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1353408677111150
 GameObject:
   m_ObjectHideFlags: 0
@@ -19868,7 +19871,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 6
+  m_Radius: 8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1673937848761578
 GameObject:
@@ -44144,11 +44147,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tentara Belanda sniper
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 41a6a546fa0ceab41a31eeac8a4878cc,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: b634b723f29154a4f900c8ffd834bea1,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41a6a546fa0ceab41a31eeac8a4878cc, type: 3}
 --- !u!4 &4073486944248976366 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 41a6a546fa0ceab41a31eeac8a4878cc,
+    type: 3}
+  m_PrefabInstance: {fileID: 4543384039819293701}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7955540707863366036 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 41a6a546fa0ceab41a31eeac8a4878cc,
     type: 3}
   m_PrefabInstance: {fileID: 4543384039819293701}
   m_PrefabAsset: {fileID: 0}

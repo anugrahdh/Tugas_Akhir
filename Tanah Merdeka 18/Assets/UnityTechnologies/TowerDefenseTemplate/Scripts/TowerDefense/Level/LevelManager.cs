@@ -168,6 +168,14 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
+		/// Start building phase again
+		/// </summary>
+		public virtual void StartBuilding()
+        {
+			ChangeLevelState(LevelState.Building);
+		}
+
+		/// <summary>
 		/// Caches the attached wave manager and subscribes to the spawning completed event
 		/// Sets the level state to intro and ensures that the number of enemies is set to 0
 		/// </summary>
