@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Core.Extensions;
 using UnityEngine;
+using TowerDefense.Agents;
 
 namespace TowerDefense.Level
 {
@@ -25,6 +26,15 @@ namespace TowerDefense.Level
 		/// </summary>
 		[Tooltip("Specify this list in order")]
 		public List<Wave> waves = new List<Wave>();
+
+		public List<Agent> allEnemies = new List<Agent>();
+
+		public float timeBetweenWaves;
+		float waveCounter;
+		public float TimeBetweenWavesCounter
+		{
+			get { return waveCounter; }
+		}
 
 		/// <summary>
 		/// The current wave number
@@ -80,14 +90,17 @@ namespace TowerDefense.Level
 			}
 		}
 
+		public static WaveManager instance;
 		/// <summary>
 		/// Inits the first wave
 		/// </summary>
 		protected virtual void Awake()
 		{
+			instance = this;
 			if (startWavesOnAwake)
 			{
-				StartWaves();
+				waveCounter = timeBetweenWaves;
+				//StartWaves();
 			}
 		}
 
@@ -115,6 +128,10 @@ namespace TowerDefense.Level
 			if (LevelManager.instance.levelState != LevelState.SpawningEnemies)
 				return;
 
+			if (waveCounter > 0)
+				return;
+
+			waveCounter = timeBetweenWaves;
 			Wave wave = waves[m_CurrentIndex];
 			wave.waveCompleted += NextWave;
 			wave.Init();
@@ -132,6 +149,20 @@ namespace TowerDefense.Level
 			if (spawningCompleted != null)
 			{
 				spawningCompleted();
+			}
+		}
+
+		private void Update()
+		{
+			if(allEnemies.Count <= 0 && LevelManager.instance.levelState == LevelState.Building)
+			{
+				waveCounter -= Time.deltaTime;
+			}
+			if(waveCounter <= 0 && LevelManager.instance.levelState != LevelState.SpawningEnemies)
+			{
+				LevelManager.instance.BuildingCompleted();
+				StartWaves();
+				
 			}
 		}
 	}

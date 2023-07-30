@@ -29,7 +29,7 @@ namespace Core.Health
 		/// </summary>
 		protected Damageable m_Damageable;
 
-		[SerializeField] Animator animator;
+		public Animator animator;
 
 		/// <summary>
 		/// Subscribes to the damageable's died event
@@ -66,12 +66,12 @@ namespace Core.Health
 				return;
 			}
 
-			var pfx = Poolable.TryGetPoolable<ParticleSystem>(deathParticleSystemPrefab.gameObject);
-			pfx.transform.position = transform.position + deathEffectOffset;
-			pfx.Play();
+			//var pfx = Poolable.TryGetPoolable<ParticleSystem>(deathParticleSystemPrefab.gameObject);
+			//pfx.transform.position = transform.position + deathEffectOffset;
+			//pfx.Play();
 
-			if (animator)
-				animator.SetBool("isDead", true);
+			//if (animator)
+				//animator.SetBool("isDead", true);
 		}
 	}
 }

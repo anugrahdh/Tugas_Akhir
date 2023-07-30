@@ -3,6 +3,7 @@ using Core.Health;
 using TowerDefense.Affectors;
 using TowerDefense.Towers.Data;
 using TowerDefense.UI.HUD;
+using TowerDefense.Level;
 using UnityEngine;
 
 namespace TowerDefense.Towers
@@ -13,6 +14,7 @@ namespace TowerDefense.Towers
 	[DisallowMultipleComponent]
 	public class TowerLevel : MonoBehaviour, ISerializationCallbackReceiver
 	{
+		public Animator animator;
 		/// <summary>
 		/// The prefab for communicating placement in the scene
 		/// </summary>
@@ -116,8 +118,12 @@ namespace TowerDefense.Towers
 			foreach (Affector effect in Affectors)
 			{
 				effect.Initialize(alignment, mask);
+
+				AttackAffector ae = effect as AttackAffector;
+				ae.targetter.isAiming = true;
 			}
 			m_ParentTower = tower;
+			m_ParentTower.GetComponent<DeathEffect>().animator = animator;
 		}
 
 		/// <summary>
@@ -196,5 +202,51 @@ namespace TowerDefense.Towers
 				Instantiate(buildEffectPrefab, transform);
 			}
 		}
+
+		public void EnableFire()
+		{
+			foreach (Affector affector in Affectors)
+			{
+				if (affector != null)
+				{
+					
+					affector.canFire = true;
+				}
+			}
+
+		}
+		public void DisableFire()
+		{
+			foreach (Affector affector in Affectors)
+			{
+				if (affector != null)
+				{
+					affector.canFire = false;
+				}
+			}
+		}
+
+		void Update()
+        {
+			if(animator)
+				animator.SetBool("isDead", m_ParentTower.isDead);
+
+			foreach (Affector affector in Affectors)
+            {
+				var a = affector as AttackAffector;
+				if (a.targetter.GetTarget() && !m_ParentTower.isDead)
+				{
+					if (LevelManager.instance.isFiring)
+					EnableFire();
+				}
+				else
+                {
+					DisableFire();
+
+				}
+			}
+				
+		}
+		
 	}
 }

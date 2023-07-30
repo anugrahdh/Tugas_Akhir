@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using ActionGameFramework.Health;
 using Core.Utilities;
 using TowerDefense.Level;
@@ -86,6 +87,7 @@ namespace TowerDefense.Towers
 		/// The event that fires off when a tower has been destroyed
 		/// </summary>
 		public Action towerDestroyed;
+
 
 		/// <summary>
 		/// Provide the tower with data to initialize with
@@ -227,6 +229,19 @@ namespace TowerDefense.Towers
 			Destroy(gameObject);
 		}
 
+		public override void PlayDeathAnim()
+        {
+
+			StartCoroutine(DeathWaitTime());
+		}
+
+		IEnumerator DeathWaitTime()
+        {
+			currentTowerLevel.DisableFire();
+			yield return new WaitForSeconds(1);
+			Remove();
+		}
+
 		/// <summary>
 		/// unsubsribe when necessary
 		/// </summary>
@@ -265,7 +280,7 @@ namespace TowerDefense.Towers
 			// disable affectors
 			LevelState levelState = LevelManager.instance.levelState;
 			bool initialise = levelState == LevelState.AllEnemiesSpawned || levelState == LevelState.SpawningEnemies;
-			currentTowerLevel.SetAffectorState(initialise);
+			//currentTowerLevel.SetAffectorState(initialise);
 		}
 
 		/// <summary>
@@ -293,7 +308,7 @@ namespace TowerDefense.Towers
 		protected virtual void OnLevelStateChanged(LevelState previous, LevelState current)
 		{
 			bool initialise = current == LevelState.AllEnemiesSpawned || current == LevelState.SpawningEnemies;
-			currentTowerLevel.SetAffectorState(initialise);
+			//currentTowerLevel.SetAffectorState(initialise);
 		}
 	}
 }

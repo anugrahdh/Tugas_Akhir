@@ -4880,6 +4880,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e4035901ee40bba7c0866d2c6338a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAiming: 0
+  returnToZeroPos: 0
   turret: {fileID: 4668421161031434}
   turretXRotationRange: {x: 0, y: 359}
   onlyYTurretRotation: 1
@@ -14649,6 +14651,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d8e55681884ffb9fb6ed0b6f18f0bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 5952552507769706872}
   towerGhostPrefab: {fileID: 114921728373014414, guid: e9c958e81a4e2414381678b79745590a,
     type: 3}
   buildEffectPrefab: {fileID: 1395313577031670, guid: c559c1920b5d04e6d83aa4464fba5c68,
@@ -38702,11 +38705,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pejuang Solotrum
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 8e79cb7ff1b7b7543bcf499d0527e6f6,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 446deaaee0779c94d89628550a3b5a98,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e79cb7ff1b7b7543bcf499d0527e6f6, type: 3}
 --- !u!4 &323021274492470018 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8e79cb7ff1b7b7543bcf499d0527e6f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 284047139204097257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5952552507769706872 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 8e79cb7ff1b7b7543bcf499d0527e6f6,
     type: 3}
   m_PrefabInstance: {fileID: 284047139204097257}
   m_PrefabAsset: {fileID: 0}

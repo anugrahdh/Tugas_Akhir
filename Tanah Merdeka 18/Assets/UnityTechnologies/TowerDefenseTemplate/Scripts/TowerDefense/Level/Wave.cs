@@ -122,6 +122,8 @@ namespace TowerDefense.Level
 			agentInstance.Initialize();
 			agentInstance.SetNode(node);
 			agentInstance.transform.rotation = node.transform.rotation;
+
+			WaveManager.instance.allEnemies.Add(agentInstance);
 		}
 
 		/// <summary>
@@ -131,7 +133,7 @@ namespace TowerDefense.Level
 		{
 			if (waveCompleted != null)
 			{
-				LevelManager.instance.StartBuilding();
+				LevelManager.instance.StartNewRound();
 				waveCompleted();
 			}
 		}

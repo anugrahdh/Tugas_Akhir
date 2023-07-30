@@ -13,6 +13,16 @@ namespace TowerDefense.Targetting
 	public class Targetter : MonoBehaviour
 	{
 		/// <summary>
+		/// if tower should aim
+		/// </summary>
+		public bool isAiming;
+
+		/// <summary>
+		/// vector zero after aiming
+		/// </summary>
+		public bool returnToZeroPos;
+
+		/// <summary>
 		/// Fires when a targetable enters the target collider
 		/// </summary>
 		public event Action<Targetable> targetEntersRange;
@@ -363,7 +373,8 @@ namespace TowerDefense.Targetting
 					m_XRotationCorrectionTime = Mathf.Clamp01((m_XRotationCorrectionTime + Time.deltaTime) / idleCorrectionTime);
 					euler.y += m_CurrentRotationSpeed * Time.deltaTime;
 
-					turret.localRotation = Quaternion.identity;
+					if(returnToZeroPos)
+						turret.localRotation = Quaternion.identity;
 				}
 			}
 			else
@@ -382,7 +393,9 @@ namespace TowerDefense.Targetting
 				float x = Wrap180(lookEuler.x);
 				lookEuler.x = Mathf.Clamp(x, turretXRotationRange.x, turretXRotationRange.y);
 				look.eulerAngles = lookEuler;
-				turret.rotation = look;
+
+				if(isAiming)
+					turret.rotation = look;
 			}
 		}
 

@@ -158,6 +158,9 @@ namespace TowerDefense.Agents
 			}
 			m_NavMeshAgent.enabled = false;
 
+			if (WaveManager.instance.allEnemies.Contains(this))
+				WaveManager.instance.allEnemies.Remove(this);
+
 			Poolable.TryPool(gameObject);
 		}
 

@@ -98,6 +98,7 @@ namespace Core.Health
 			{
 				died(this);
 			}
+			PlayDeathAnim();
 		}
 		
 		/// <summary>
@@ -117,7 +118,13 @@ namespace Core.Health
 		void OnConfigurationDied(HealthChangeInfo changeInfo)
 		{
 			OnDeath();
-			Remove();
+			//Remove();
+		}
+
+		public virtual void PlayDeathAnim() 
+		{
+			//if (animator)
+				//animator.SetBool("isDead", true);
 		}
 	}
 }
