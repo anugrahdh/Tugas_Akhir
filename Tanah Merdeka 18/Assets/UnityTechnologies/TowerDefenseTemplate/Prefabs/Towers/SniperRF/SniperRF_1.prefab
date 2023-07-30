@@ -4880,6 +4880,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e4035901ee40bba7c0866d2c6338a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAiming: 0
+  returnToZeroPos: 0
   turret: {fileID: 4668421161031434}
   turretXRotationRange: {x: 0, y: 359}
   onlyYTurretRotation: 1
@@ -14649,6 +14651,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d8e55681884ffb9fb6ed0b6f18f0bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 387054949792812922}
   towerGhostPrefab: {fileID: 114921728373014414, guid: d82fdcbd361ba2745a06cfd8eb3e8814,
     type: 3}
   buildEffectPrefab: {fileID: 1395313577031670, guid: c559c1920b5d04e6d83aa4464fba5c68,
@@ -38812,8 +38815,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pejuang Sniper
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: bf1586e7ebfa05f4392e0feceaf37b26,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 8762acd0eb27e834f903381cfa79799b,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf1586e7ebfa05f4392e0feceaf37b26, type: 3}
+--- !u!95 &387054949792812922 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: bf1586e7ebfa05f4392e0feceaf37b26,
+    type: 3}
+  m_PrefabInstance: {fileID: 6067911949884437227}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6034599997348566272 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bf1586e7ebfa05f4392e0feceaf37b26,

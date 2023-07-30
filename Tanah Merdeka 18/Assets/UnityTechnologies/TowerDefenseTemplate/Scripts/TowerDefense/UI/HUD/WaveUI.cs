@@ -33,6 +33,7 @@ namespace TowerDefense.UI.HUD
 		{
 			m_Canvas = GetComponent<Canvas>();
 			m_TotalWaves = LevelManager.instance.waveManager.totalWaves;
+			display.text = string.Format("{0}/{1}", 0, m_TotalWaves);
 			LevelManager.instance.waveManager.waveChanged += UpdateDisplay;
 		}
 
@@ -48,8 +49,15 @@ namespace TowerDefense.UI.HUD
 
 		protected virtual void Update()
 		{
-			waveFillImage.fillAmount = LevelManager.instance.waveManager.waveProgress;
-			m_Canvas.enabled = (LevelManager.instance.levelState == LevelState.SpawningEnemies);
+			if(LevelManager.instance.levelState == LevelState.Building)
+			{
+				waveFillImage.fillAmount = WaveManager.instance.TimeBetweenWavesCounter/ WaveManager.instance.timeBetweenWaves;
+			}
+			else
+			{
+				waveFillImage.fillAmount = LevelManager.instance.waveManager.waveProgress;
+			}
+			//m_Canvas.enabled = (LevelManager.instance.levelState == LevelState.SpawningEnemies);
 		}
 
 		/// <summary>

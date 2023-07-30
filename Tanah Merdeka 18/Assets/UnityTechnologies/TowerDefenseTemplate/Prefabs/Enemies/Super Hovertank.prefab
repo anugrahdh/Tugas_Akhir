@@ -14385,7 +14385,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1271389358909432}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.1
+  m_Radius: 1.6
   m_Speed: 2
   m_Acceleration: 20
   avoidancePriority: 60
@@ -14655,7 +14655,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.5191112, y: 0.8376982, z: 3.115067}
-  m_Center: {x: -0.012941241, y: 0.57353616, z: -0.3594954}
+  m_Center: {x: -0.012941241, y: 0.57353616, z: 0}
 --- !u!114 &114913371651466060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19532,7 +19532,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569749325543542}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.02848652, y: 1.1964833, z: -0.016255448}
+  m_LocalPosition: {x: -0.02848652, y: 1.1964833, z: 1.12}
   m_LocalScale: {x: 94.75954, y: 94.75954, z: 94.75954}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24380,6 +24380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e4035901ee40bba7c0866d2c6338a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAiming: 0
+  returnToZeroPos: 0
   turret: {fileID: 4329195597445580}
   turretXRotationRange: {x: 0, y: 359}
   onlyYTurretRotation: 1
@@ -34082,7 +34084,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1857220612215862}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0030121328, y: 1.9299529, z: -0.8727856}
+  m_LocalPosition: {x: 0.0030121328, y: 1.9299529, z: 0.26346976}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

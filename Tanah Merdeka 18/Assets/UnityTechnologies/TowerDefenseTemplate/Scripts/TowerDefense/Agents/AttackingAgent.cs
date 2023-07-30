@@ -2,6 +2,8 @@
 using TowerDefense.Affectors;
 using TowerDefense.Towers;
 using UnityEngine;
+using System.Collections;
+using TowerDefense.Level;
 
 namespace TowerDefense.Agents
 {
@@ -80,43 +82,58 @@ namespace TowerDefense.Agents
 				m_TargetTower = null;
 			}
 		}
-		
+
 		/// <summary>
 		/// Peforms the relevant path update for the states <see cref="Agent.State.OnCompletePath"/>, 
 		/// <see cref="Agent.State.OnPartialPath"/> and <see cref="Agent.State.Attacking"/>
 		/// </summary>
 		protected override void PathUpdate()
 		{
-			switch (state)
+			if (animator)
 			{
-				case State.OnCompletePath:
-					OnCompletePathUpdate();
-					break;
-				case State.OnPartialPath:
-					OnPartialPathUpdate();
-					break;
-				case State.Attacking:
-					AttackingUpdate();
-					break;
+				animator.SetBool("isAttacking", m_IsAttacking);
+				animator.SetBool("isDead", isDead);
 			}
+				
 
-			switch (state)
+			if (isDead)
 			{
-				case State.OnCompletePath:
-					if (animator)
-						animator.SetBool("isAttacking", false);
-					break;
-				case State.OnPartialPath:
-					if (animator)
-						animator.SetBool("isAttacking", false);
-					break;
-				case State.Attacking:
-					if (animator)
-						animator.SetBool("isAttacking", true);
-					break;
+				m_IsAttacking = false;
+
+				m_TargetTower = null;
+				m_AttackAffector.DisableFire();
+				m_AttackAffector.enabled = false;
+
+				m_NavMeshAgent.isStopped = true;
 			}
+			else
+			{
+				switch (state)
+				{
+					case State.OnCompletePath:
+						OnCompletePathUpdate();
+						break;
+					case State.OnPartialPath:
+						OnPartialPathUpdate();
+						break;
+					case State.Attacking:
+						AttackingUpdate();
+						break;
+				}
 
-
+				switch (state)
+				{
+					case State.OnCompletePath:
+						m_AttackAffector.towerTargetter.returnToZeroPos = true;
+						break;
+					case State.OnPartialPath:
+						m_AttackAffector.towerTargetter.isAiming = true;
+						break;
+					case State.Attacking:
+						m_AttackAffector.towerTargetter.isAiming = isPathBlocked ? true : m_LevelManager.isFiring;
+						break;
+				}
+			}
 		}
 
 		/// <summary>
@@ -125,18 +142,31 @@ namespace TowerDefense.Agents
 		protected override void OnCompletePathUpdate()
 		{
 			m_AttackAffector.towerTargetter.transform.position = transform.position;
+
 			Tower tower = GetClosestTower();
+
 			if (tower)
 			{
 				m_TargetTower = tower;
 				float distanceToTower = Vector3.Distance(transform.position, m_TargetTower.transform.position);
-				state = (isPathBlocked || distanceToTower <= m_AttackAffector.towerTargetter.effectRadius) ? State.OnPartialPath : State.OnCompletePath;
+
+				if(isPathBlocked || distanceToTower <= m_AttackAffector.towerTargetter.effectRadius)
+				{
+					if(LevelManager.instance.isFiring)
+						state = State.OnPartialPath;
+				}
 			}
 			else
-            {
-				state = isPathBlocked ? State.OnPartialPath : State.OnCompletePath;
+			{
+
+				m_TargetTower = null;
+				m_NavMeshAgent.isStopped = false;
+				MoveToNode();
 			}
+
 			
+
+
 		}
 
 		/// <summary>
@@ -186,7 +216,10 @@ namespace TowerDefense.Agents
 					m_AttackAffector.towerTargetter.transform.position = transform.position;
 					m_AttackAffector.enabled = true;
 				}
-				state = State.Attacking;
+
+				m_AttackAffector.EnableFire();
+
+				state = isPathBlocked ? State.Attacking : (m_LevelManager.isFiring? State.Attacking : State.OnCompletePath);
 				m_NavMeshAgent.isStopped = true;
 			}
 			
@@ -197,20 +230,18 @@ namespace TowerDefense.Agents
 		/// </summary>
 		protected void AttackingUpdate()
 		{
+			m_IsAttacking = true;
 			if (m_TargetTower)
 			{
 				return;
 			}
 
-
-			MoveToNode();
-
 			// Resume path once blocking has been cleared
 			m_IsAttacking = false;
-			m_NavMeshAgent.isStopped = false;
-			m_AttackAffector.enabled = false;
 
-			
+			m_TargetTower = null;
+			m_AttackAffector.DisableFire();
+			m_AttackAffector.enabled = false;
 
 			Tower tower = GetClosestTower();
 			if (tower)
@@ -220,12 +251,24 @@ namespace TowerDefense.Agents
 			}
 			else
 			{
-				state = isPathBlocked? State.OnPartialPath : State.OnCompletePath;
+				state = State.OnCompletePath;
+				MoveToNode();
 			}
 
 			// Move the Targetter back to the agent's position
 			m_AttackAffector.towerTargetter.transform.position = transform.position;
-
 		}
-    }
+
+		public override void PlayDeathAnim()
+		{
+
+			StartCoroutine(deathAnim());
+		}
+
+		IEnumerator deathAnim()
+		{
+			yield return new WaitForSeconds(1);
+			Remove();
+		}
+	}
 }

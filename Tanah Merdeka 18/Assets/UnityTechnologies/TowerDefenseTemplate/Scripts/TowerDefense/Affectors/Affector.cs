@@ -9,6 +9,8 @@ namespace TowerDefense.Affectors
 	/// </summary>
 	public abstract class Affector : MonoBehaviour
 	{
+
+		public bool canFire;
 		/// <summary>
 		/// Short description for affector for displaying in the UI
 		/// </summary>
@@ -48,6 +50,15 @@ namespace TowerDefense.Affectors
 		public virtual void Initialize(IAlignmentProvider affectorAlignment)
 		{
 			Initialize(affectorAlignment, -1);
+		}
+
+		public void EnableFire()
+		{
+			canFire = true;
+		}
+		public void DisableFire()
+		{
+			canFire = false;
 		}
 	}
 }

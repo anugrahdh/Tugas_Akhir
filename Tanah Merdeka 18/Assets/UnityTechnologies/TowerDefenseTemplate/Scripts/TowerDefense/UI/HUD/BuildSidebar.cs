@@ -81,7 +81,8 @@ namespace TowerDefense.UI.HUD
 		{
 			if (LevelManager.instanceExists)
 			{
-				LevelManager.instance.BuildingCompleted();
+				//LevelManager.instance.BuildingCompleted();
+				LevelManager.instance.StartFiring();
 			}
 		}
 
@@ -89,7 +90,7 @@ namespace TowerDefense.UI.HUD
         {
 			if (LevelManager.instanceExists)
 			{
-				if(LevelManager.instance.levelState == LevelState.Building)
+				if(!LevelManager.instance.isFiring)
                 {
 					if(!startButton.activeInHierarchy)
 						startButton.SetActive(true);

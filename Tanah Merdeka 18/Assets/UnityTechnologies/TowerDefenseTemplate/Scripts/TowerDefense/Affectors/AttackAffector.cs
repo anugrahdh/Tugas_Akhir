@@ -6,6 +6,7 @@ using TowerDefense.Targetting;
 using TowerDefense.Towers;
 using TowerDefense.Towers.Projectiles;
 using UnityEngine;
+using TowerDefense.Level;
 
 namespace TowerDefense.Affectors
 {
@@ -109,12 +110,12 @@ namespace TowerDefense.Affectors
 			get { return towerTargetter.effectRadius; }
 		}
 
-		public Color effectColor 
+		public Color effectColor
 		{
 			get { return radiusEffectColor; }
 		}
 
-		public Targetter targetter 
+		public Targetter targetter
 		{
 			get { return towerTargetter; }
 		}
@@ -214,7 +215,7 @@ namespace TowerDefense.Affectors
 		/// </summary>
 		protected virtual void FireProjectile()
 		{
-			if (m_TrackingEnemy == null)
+			if (m_TrackingEnemy == null || !canFire)
 			{
 				return;
 			}
@@ -245,6 +246,8 @@ namespace TowerDefense.Affectors
 			float secondSqrMagnitude = Vector3.SqrMagnitude(second.position - epicenter.position);
 			return firstSqrMagnitude.CompareTo(secondSqrMagnitude);
 		}
+
+		
 
 #if UNITY_EDITOR
 		/// <summary>

@@ -20,6 +20,16 @@ namespace TowerDefense.Level
 		public LevelIntro intro;
 
 		/// <summary>
+		/// Skips building phase and straight onto spawning enemies
+		/// </summary>
+		public bool skipBuilding;
+
+		/// <summary>
+		/// if the towers can fire now
+		/// </summary>
+		public bool isFiring;
+
+		/// <summary>
 		/// The tower library for this level
 		/// </summary>
 		public TowerLibrary towerLibrary;
@@ -165,14 +175,26 @@ namespace TowerDefense.Level
 		public virtual void BuildingCompleted()
 		{
 			ChangeLevelState(LevelState.SpawningEnemies);
+			StopFiring();
 		}
 
 		/// <summary>
 		/// Start building phase again
 		/// </summary>
-		public virtual void StartBuilding()
+		public virtual void StartNewRound()
         {
+			
 			ChangeLevelState(LevelState.Building);
+			//StopFiring();
+		}
+
+		public virtual void StartFiring()
+		{
+			isFiring = true;
+		}
+		public virtual void StopFiring()
+		{
+			isFiring = false;
 		}
 
 		/// <summary>
@@ -251,7 +273,10 @@ namespace TowerDefense.Level
 		/// </summary>
 		protected virtual void IntroCompleted()
 		{
-			ChangeLevelState(LevelState.Building);
+			if (skipBuilding)
+				ChangeLevelState(LevelState.SpawningEnemies);
+			else
+				ChangeLevelState(LevelState.Building);
 		}
 
 		/// <summary>
@@ -273,6 +298,8 @@ namespace TowerDefense.Level
 			{
 				return;
 			}
+
+			
 
 			LevelState oldState = levelState;
 			levelState = newState;
@@ -300,6 +327,8 @@ namespace TowerDefense.Level
 					SafelyCallLevelCompleted();
 					break;
 			}
+
+			Debug.Log("Changed state to " + newState);
 		}
 
 		/// <summary>
