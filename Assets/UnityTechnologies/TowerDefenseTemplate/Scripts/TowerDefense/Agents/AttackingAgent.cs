@@ -125,9 +125,10 @@ namespace TowerDefense.Agents
 				{
 					case State.OnCompletePath:
 						m_AttackAffector.towerTargetter.returnToZeroPos = true;
+						m_AttackAffector.towerTargetter.isAiming = false;
 						break;
 					case State.OnPartialPath:
-						m_AttackAffector.towerTargetter.isAiming = true;
+						m_AttackAffector.towerTargetter.isAiming = false;
 						break;
 					case State.Attacking:
 						m_AttackAffector.towerTargetter.isAiming = isPathBlocked ? true : m_LevelManager.isFiring;
@@ -154,6 +155,12 @@ namespace TowerDefense.Agents
 				{
 					if(LevelManager.instance.isFiring)
 						state = State.OnPartialPath;
+				}
+				else
+				{
+
+					m_NavMeshAgent.isStopped = false;
+					MoveToNode();
 				}
 			}
 			else
@@ -195,19 +202,25 @@ namespace TowerDefense.Agents
 					m_TargetTower.removed += OnTargetTowerDestroyed;
 				}
 			}
+
+			//if no tower left
 			if (m_TargetTower == null)
 			{
+				//if not blocked path, return to complete path
 				if (!isPathBlocked)
 				{
 					state = State.OnCompletePath;
 					return;
 				}
 			}
+			//if there is tower
 			else
             {
 				float distanceToTower = Vector3.Distance(transform.position, m_TargetTower.transform.position);
-				if (distanceToTower >= m_AttackAffector.towerTargetter.effectRadius)
+				//if too far, return
+				if (distanceToTower > m_AttackAffector.towerTargetter.effectRadius)
 				{
+					state = State.OnCompletePath;
 					return;
 				}
 
