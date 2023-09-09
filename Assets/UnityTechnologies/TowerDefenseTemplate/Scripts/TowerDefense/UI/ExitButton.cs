@@ -15,6 +15,9 @@ namespace TowerDefense.UI
 		public override void OnPointerClick(PointerEventData eventData)
 		{
 			Application.Quit();
+#if UNITY_EDITOR
+			UnityEditor.EditorApplication.ExitPlaymode();
+#endif
 		}
 
 		/// <summary>
@@ -30,6 +33,7 @@ namespace TowerDefense.UI
 				gameObject.SetActive(false);
 			}
 #endif
+
 		}
 	}
 }

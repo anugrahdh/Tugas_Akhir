@@ -7,11 +7,11 @@ public class ButtonTutorial : MonoBehaviour
 {
     public void TutorialMenu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 6);
+        SceneManager.LoadScene("Tutorial");
     }
     public void MainMenu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 6);
+        SceneManager.LoadScene("MainMenu");
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿using TowerDefense.Level;
 using TowerDefense.Towers;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TowerDefense.UI.HUD
 {
@@ -14,7 +15,7 @@ namespace TowerDefense.UI.HUD
 		/// </summary>
 		public TowerSpawnButton towerSpawnButton;
 
-		public GameObject startButton;
+		public Button startButton;
 		public AudioSource waveUIAudio;
 
 		/// <summary>
@@ -93,14 +94,14 @@ namespace TowerDefense.UI.HUD
 			{
 				if(!LevelManager.instance.isFiring)
                 {
-					if(!startButton.activeInHierarchy)
-						startButton.SetActive(true);
+					if (!startButton.interactable)
+						startButton.interactable = true; 
 
 				}
 				else
                 {
-					if (startButton.activeInHierarchy)
-						startButton.SetActive(false);
+					if (startButton.interactable)
+						startButton.interactable = false;
 				}
 
 				if(UnityEngine.Input.GetKeyDown(KeyCode.Space))
